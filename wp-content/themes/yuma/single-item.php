@@ -78,6 +78,12 @@
         <div class="row">
           <div class="col-lg-8 col-md-10 mx-auto">
             <?php the_content(); ?>
+            <dl>
+              <dt>価格</dt>
+              <dd><?php echo number_format(esc_html(get_field('価格'))); ?>円</dd>
+              <dt>発売日</dt>
+              <dd><?php echo esc_html(get_field('発売日')); ?></dd>
+            </dl>
           </div>
         </div>
       </div>
