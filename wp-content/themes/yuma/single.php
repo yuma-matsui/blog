@@ -16,7 +16,6 @@
 
   <!-- Custom styles for this template -->
   <link href="<?php echo get_template_directory_uri(); ?>/css/clean-blog.min.css" rel="stylesheet">
-
   <?php wp_head(); ?>
 </head>
 
@@ -33,7 +32,7 @@
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
-            <a class="nav-link" href="<?php echo home_url(); ?>">Home</a>
+            <a class="nav-link" href="index.html">Home</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="about.html">About</a>
@@ -42,57 +41,45 @@
             <a class="nav-link" href="post.html">Sample Post</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="<?php the_permalink(); ?>">Contact</a>
+            <a class="nav-link" href="contact.html">Contact</a>
           </li>
         </ul>
       </div>
     </div>
   </nav>
 
-  <!-- Page Header -->
-  <header class="masthead" style="background-image: url('<?php echo get_template_directory_uri(); ?>/img/home-bg.jpg')">
-    <div class="overlay"></div>
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-8 col-md-10 mx-auto">
-          <div class="site-heading">
-            <?php the_post(); ?>
-            <h1><?php bloginfo('name'); ?></h1>
+  <?php while (have_posts()) : the_post(); ?>
+    <!-- Page Header -->
+    <header class="masthead" style="background-image: url('<?php echo get_template_directory_uri(); ?>/img/post-bg.jpg')">
+      <div class="overlay"></div>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-md-10 mx-auto">
+            <div class="post-heading">
+              <h1><?php the_title(); ?></h1>
+              <h2 class="subheading"><?php the_excerpt() ?></h2>
+              <span class="meta">Posted by
+                <?php the_author(); ?>
+                on <?php the_date('Y-m-d'); ?></span>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </header>
+    </header>
 
-  <!-- Main Content -->
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-8 col-md-10 mx-auto">
-        <?php while (have_posts()) : the_post(); ?>
-          <div class="post-preview">
-            <a href="<?php the_permalink(); ?>">
-              <h2 class="post-title">
-                <?php the_title(); ?>
-              </h2>
-              <h3 class="post-subtitle">
-                <?php the_excerpt(); ?>
-              </h3>
-            </a>
-            <p class="post-meta">Posted by
-              <?php the_author(); ?>
-              on <?php the_time('Y-m-d'); ?></p>
+    <!-- Post Content -->
+    <article>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-md-10 mx-auto">
+            <?php the_content(); ?>
           </div>
-          <hr>
-        <?php endwhile; ?>
-        <!-- Pager -->
-        <div class="clearfix">
-          <?php echo paginate_links(); ?>
         </div>
       </div>
-    </div>
-  </div>
+    </article>
 
-  <hr>
+    <hr>
+  <?php endwhile; ?>
 
   <!-- Footer -->
   <footer>
