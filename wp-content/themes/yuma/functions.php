@@ -12,7 +12,16 @@ function init_func()
     'has_archive' => true,
     'hierarchical' => false,
     'menu_position' => 5,
-    'menu_icon' => 'dashicons-cart'
+    'menu_icon' => 'dashicons-cart',
+    'show_in_rest' => true
+  ]);
+
+  register_taxonomy('item_category', 'item', [
+    'labels' => [
+      'name' => '商品カテゴリー'
+    ],
+    'hierarchical' => true,
+    'show_in_rest' => true
   ]);
 }
 
