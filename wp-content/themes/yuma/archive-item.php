@@ -16,6 +16,7 @@
 
   <!-- Custom styles for this template -->
   <link href="<?php echo get_template_directory_uri(); ?>/css/clean-blog.min.css" rel="stylesheet">
+
   <?php wp_head(); ?>
 </head>
 
@@ -32,7 +33,7 @@
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
-            <a class="nav-link" href="index.html">Home</a>
+            <a class="nav-link" href="<?php echo home_url(); ?>">Home</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="about.html">About</a>
@@ -41,53 +42,52 @@
             <a class="nav-link" href="post.html">Sample Post</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="contact.html">Contact</a>
+            <a class="nav-link" href="<?php the_permalink(); ?>">Contact</a>
           </li>
         </ul>
       </div>
     </div>
   </nav>
 
-  <?php while (have_posts()) : the_post(); ?>
-    <!-- Page Header -->
-    <?php
-    $id = get_post_thumbnail_id();
-    $img = wp_get_attachment_image_src($id);
-    ?>
-
-    <header class="masthead" style="background-image: url('<?php echo $img[0]; ?>')">
-      <div class="overlay"></div>
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-8 col-md-10 mx-auto">
-            <div class="post-heading">
-              <h1><?php the_title(); ?></h1>
-              <h2 class="subheading"><?php the_excerpt() ?></h2>
-            </div>
+  <!-- Page Header -->
+  <header class="masthead" style="background-image: url('<?php echo get_template_directory_uri(); ?>/img/home-bg.jpg')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="site-heading">
+            <?php the_post(); ?>
+            <h1>商品一覧</h1>
           </div>
         </div>
       </div>
-    </header>
+    </div>
+  </header>
 
-    <!-- Post Content -->
-    <article>
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-8 col-md-10 mx-auto">
-            <?php the_content(); ?>
-            <dl>
-              <dt>価格</dt>
-              <dd><?php echo number_format(esc_html(get_field('価格'))); ?>円</dd>
-              <dt>発売日</dt>
-              <dd><?php echo esc_html(get_field('発売日')); ?></dd>
-            </dl>
+  <!-- Main Content -->
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <?php while (have_posts()) : the_post(); ?>
+          <div class="post-preview">
+            <a href="<?php the_permalink(); ?>">
+              <h2 class="post-title">
+                <?php the_title(); ?>
+              </h2>
+            </a>
+            <p>価格: <?php echo number_format(esc_html(get_field('価格'))); ?>円</p>
           </div>
+          <hr>
+        <?php endwhile; ?>
+        <!-- Pager -->
+        <div class="clearfix">
+          <?php echo paginate_links(); ?>
         </div>
       </div>
-    </article>
+    </div>
+  </div>
 
-    <hr>
-  <?php endwhile; ?>
+  <hr>
 
   <!-- Footer -->
   <footer>
